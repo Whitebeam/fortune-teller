@@ -50,8 +50,11 @@ public class MagicNumbers {
     }
 
     public int calculateE() {
-        //TODO: calculate E
-        return 0;
+	double e = income * Math.sqrt(age * height);
+	while (Math.round(e) >= 10) {
+		e = e/2;
+	}
+        return (int) Math.round(e);
     }
 
     public void setName(String name) {
