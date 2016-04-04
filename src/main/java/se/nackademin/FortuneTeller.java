@@ -17,8 +17,8 @@ public class FortuneTeller {
      *
      */
     public String calculate() {
-        //TODO: Implement
-        return "Not implemented!";
+	Translator tr = new Translator();
+        return "Din framtid är " + tr.getAdjective(magicNumbers.calculateA()) + ". Du borde sluta " + tr.getVerb(magicNumbers.calculateB()) + ". Vi ser att du snart kommer att skaffa " + tr.getNoun(magicNumbers.calculateC()) + ". Snart kommer du att vilja " + tr.getVerb(magicNumbers.calculateD()) + ", men då är det viktigt att du är " + tr.getAdjective(magicNumbers.calculateE()) + ".";
     }
 
     public static void main(String[] args) {
