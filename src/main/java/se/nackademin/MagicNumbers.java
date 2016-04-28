@@ -9,52 +9,62 @@ public class MagicNumbers {
     private int height;
 
     public int calculateA() {
-	int a = age + 1;
-	for (int i = name.length() - 1; i >= 0; i--) {
-		if (name.charAt(i) == ' ') a++;
-	}
-	while (a >= 10) {
-		a -= 7;
-	}
-	return a;
+        int a = name.split(" ").length;
+        a += age;
+        while (a > 10) {
+            a -= 7;
+        }
+        return a;
     }
 
     public int calculateB() {
-	int b = location.length() + income;
-	while (b >= 10) {
-		b -= 7;
-	}
-	return b;
+        int b = location.length();
+        b += income;
+        while (b >= 10) {
+            b -= 7;
+        }
+        return b;
     }
 
     public int calculateC() {
-	int c = calculateA() + calculateB() - height;
-	while (c < 0) {
-		c += 10;
-	}
-	return c;
+        int c = calculateA() + calculateB();
+        c -= height;
+        //fixing issue #38
+        c = -Math.abs(c);
+        while (c < 0) {
+            c += 10;
+        }
+        return c;
     }
 
     public int calculateD() {
-	int d = calculateA();
-	if (d > 5) {
-		d += calculateB();
-	} else {
-		d += calculateC();
-	}
-	d -= income;
-	while (d < 0) {
-		d += 10;
-	}
+        int d = calculateA();
+        if (d > 5) {
+            d += calculateB();
+        } else {
+            d += calculateC();
+        }
+        d -= income;
+        //fixing issue #41
+        d = -Math.abs(d);
+        while (d < 0) {
+            d += 10;
+        }
         return d;
     }
 
     public int calculateE() {
-	double e = income * Math.sqrt(age * height);
-	while (Math.round(e) >= 10) {
-		e = e/2;
-	}
-        return (int) Math.round(e);
+        long e = age;
+        e *= income;
+        e *= income;
+        e *= height;
+        double ef = Math.sqrt(e);
+        while (ef >= 10) {
+            ef /= 2.0;
+            ef = Math.round(ef);
+        }
+        e = Math.round(ef);
+        return (int) e;
     }
 
     public void setName(String name) {
@@ -62,7 +72,7 @@ public class MagicNumbers {
     }
 
     public void setIncome(int income) {
-        this.income = income;
+        this.income = Math.abs(income);
     }
 
     public void setLocation(String location) {
@@ -70,10 +80,10 @@ public class MagicNumbers {
     }
 
     public void setAge(int age) {
-        this.age = age;
+        this.age = Math.abs(age);
     }
 
     public void setHeight(int height) {
-        this.height = height;
+        this.height = Math.abs(height);
     }
 }

@@ -1,10 +1,8 @@
 package se.nackademin;
 
-import se.nackademin.gui.FortuneTellerGui;
-
 public class FortuneTeller {
     MagicNumbers magicNumbers;
-    FortuneTellerGui fortuneTellerGui;
+    Translator translator;
 
     /*
      * Returns a fortune based on name, income, location, age and height
@@ -17,27 +15,33 @@ public class FortuneTeller {
      *
      */
     public String calculate() {
-	Translator tr = new Translator();
-        return "Din framtid är " + tr.getAdjective(magicNumbers.calculateA()) + ". Du borde sluta " + tr.getVerb(magicNumbers.calculateB()) + ". Vi ser att du snart kommer att skaffa " + tr.getNoun(magicNumbers.calculateC()) + ". Snart kommer du att vilja " + tr.getVerb(magicNumbers.calculateD()) + ", men då är det viktigt att du är " + tr.getAdjective(magicNumbers.calculateE()) + ".";
+        String adjectiveA = translator.getAdjective(magicNumbers.calculateA());
+        String verbB = translator.getVerb(magicNumbers.calculateB());
+        String nounC = translator.getNoun(magicNumbers.calculateC());
+        String verbD = translator.getVerb(magicNumbers.calculateD());
+        String adjectiveE = translator.getAdjective(magicNumbers.calculateE());
+
+        String template = "Din framtid är %s. " +
+                "Du borde sluta %s. " +
+                "Vi ser att du snart kommer att skaffa %s. " +
+                "Snart kommer du vilja %s, " +
+                "men då är det viktigt att du är %s.";
+        return String.format(template, adjectiveA, verbB, nounC, verbD, adjectiveE);
     }
 
-    public static void main(String[] args) {
-        new FortuneTeller();
-    }
 
-    FortuneTeller() {
-        fortuneTellerGui = new FortuneTellerGui(this);
-        magicNumbers = new MagicNumbers();
-
+    FortuneTeller(MagicNumbers magicNumbers, Translator translator) {
+        this.magicNumbers = magicNumbers;
+        this.translator = translator;
     }
 
     public boolean setName(String name) {
 
         magicNumbers.setName(name);
-        return name != null;
+        return name != null && !"".equals(name);
     }
 
-    Integer convertToInteger(String input) {
+    private Integer convertToInteger(String input) {
         Integer output = null;
         try {
             output = Integer.valueOf(input);
@@ -53,13 +57,13 @@ public class FortuneTeller {
             return false;
         } else {
             magicNumbers.setIncome(incomeValue);
-            return incomeValue<=10_000_000;
+            return incomeValue <= 10_000_000;
         }
     }
 
     public boolean setLocation(String location) {
         magicNumbers.setLocation(location);
-        return location != null;
+        return location != null && !"".equals(location);
     }
 
     public boolean setAge(String age) {
