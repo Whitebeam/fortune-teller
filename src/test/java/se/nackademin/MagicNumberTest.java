@@ -105,4 +105,25 @@ public class MagicNumberTest {
         int second = magicNumbers.calculateC();
         assertNotEquals("C should provide different values for different names", first, second);
     }
+    
+    @Test //issue #38
+    public void testCissue38CNotNegativeBeforeLoop() {
+        magicNumbers.setAge(27);
+        magicNumbers.setHeight(0);
+        magicNumbers.setIncome(10000);
+        magicNumbers.setLocation("Malmö");
+        magicNumbers.setName("Svante");
+        assertEquals("C is miscalculated when height is very low", 4, magicNumbers.calculateC());
+    }
+
+    @Test //issue #41
+    public void testDissue41DPositiveBeforeLoop() {
+        magicNumbers.setAge(27);
+        magicNumbers.setHeight(0);
+        magicNumbers.setIncome(10000);
+        magicNumbers.setLocation("Malmö");
+        magicNumbers.setName("Svante");
+        System.out.println("D = " + magicNumbers.calculateD());
+        assertEquals("D is miscalculated when income is very low", 6, magicNumbers.calculateD());
+    }
 }
